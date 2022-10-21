@@ -1,0 +1,27 @@
+﻿@page "/products"
+@inject IService _service;
+@if (products == null)
+{
+ <h3> loading products .....</h3>   
+}else{
+    @if (products.Count() > 0)
+    {
+        <h3>Products</h3>
+        foreach(var iten in products)
+        {
+            <div class="form-text">
+                <img src="./icon-192.png" alt="teste"/>
+                <h1>@iten.price.ToString("c")</h1>
+            </div>
+        }
+    }
+}
+
+@code {
+    public IEnumerable<ProductDto> products { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await _service.GetProducts();        
+    }
+}
